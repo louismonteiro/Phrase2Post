@@ -2,4 +2,4 @@
 
 ## Description
 
-This is an automation end-to-end that will get songs lyrics from the website https://www.letras.mus.br/ and generate images posts for instagram.
+This is an automation that will get songs lyrics from the website https://vagalume.com.br and generate square images (for facebook or instagram).

@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "axios": "^0.21.1",
+    "core-js": "^3.8.2",
+    "dashify": "^2.0.0",
+    "node-fetch": "^2.6.1",
+    "querystring": "^0.2.0",
+    "readline-sync": "^1.4.10",
+    "whatwg-fetch": "^3.5.0"
+  }
+}
