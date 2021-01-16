@@ -24,7 +24,11 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	getRandomArrayItem = (myArray = []) => {
-		return myArray[Math.floor(Math.random() * myArray.length)]
+		arrayIndex = Math.floor(Math.random() * (myArray.length-1));
+		console.log("myArray", myArray);
+		console.log("myArray length", myArray.length);
+		console.log("arrayIndex", arrayIndex);
+		return myArray[arrayIndex]
 	}
 
 	askForArtist = () => {
@@ -43,9 +47,11 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	getRandomMusic = async () => {
-		answer = await vagalume.discography(app.artist, {});
-		//all_musics = answer.response.discography.items;
-		console.log(answer)
+		answer = await vagalume.discography(app.artist, []);
+		all_lyrics = answer.artist.lyrics.item;
+		lyric = getRandomArrayItem(all_lyrics);
+		lyric_name = lyric.desc;
+		return lyric_name;
 	}
 
 	return app;

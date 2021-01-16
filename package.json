@@ -6,6 +6,7 @@
     "node-fetch": "^2.6.1",
     "querystring": "^0.2.0",
     "readline-sync": "^1.4.10",
+    "replace-special-characters": "^1.0.2",
     "whatwg-fetch": "^3.5.0"
   }
 }

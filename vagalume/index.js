@@ -3,6 +3,7 @@
 const fetch = require('node-fetch');
 const querystring = require('querystring');
 const dashify = require('dashify');
+const replaceSpecialCharacters = require('replace-special-characters');
 
 const webBaseUrl = 'https://www.vagalume.com.br';
 const apiBaseUrl = 'https://api.vagalume.com.br';
@@ -54,8 +55,9 @@ module.exports = Vagalume = global.Vagalume = class Vagalume {
 	}
 
 	async discography(artist, options) {
-		const slug = dashify(artist);
-		return this._fetch(`${webBaseUrl}/${slug}/discografia/index.js`, options);
+		let slug = dashify(artist);
+		slug = replaceSpecialCharacters(slug);
+		return this._fetch(`${webBaseUrl}/${slug}/index.js`, options);
 	}
 
 	async hotspots(options) {
