@@ -14,7 +14,6 @@ module.exports = setupPhrase2Post = () => {
 		app.artist = askForArtist(); // optional
 		if(!app.artist) app.artist = await getRandomArtist();
 
-
 		app.music = askForMusic(); // optional
 		if(!app.music) app.music = await getRandomMusic(app.artist);
 
@@ -36,10 +35,15 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	getRandomArtist = async () => {
-		answer = await vagalume.search('art', getRandomLetter());
-		all_artists = answer.response.docs;
-		artist = getRandomArrayItem(all_artists);
-		return artist.band;
+		try{
+			answer = await vagalume.search('art', getRandomLetter());
+			all_artists = answer.response.docs;
+			artist = getRandomArrayItem(all_artists);
+			return artist.band;
+		} catch(e){
+			console.log('Sorry, something went wrong when we were looking for music of ', app.artist);
+		}
+		
 	}
 
 	askForMusic = () => {
