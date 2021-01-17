@@ -55,7 +55,9 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	getLyrics = async () => {
-
+		answer = await vagalume.lyrics({art: app.artist, mus: app.music})
+		lyrics = answer.mus[0].text;
+		return lyrics
 	}
 
 	return app;
