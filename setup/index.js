@@ -1,6 +1,5 @@
 const readlineSync = require('readline-sync');
 const vagalumeApi = require('../vagalume')
-console.log(vagalumeApi);
 
 module.exports = setupPhrase2Post = () => {
 	const vagalume = new Vagalume(process.env.VAGALUME_API_KEY);
@@ -8,6 +7,8 @@ module.exports = setupPhrase2Post = () => {
 
 	app.description = "User questionnaire to setup the robot";
 	app.artist = null;
+	app.music = null;
+	app.lyrics = null;
 
 	app.startQuestionnaire = async () => {
 		app.artist = askForArtist(); // optional
@@ -16,6 +17,8 @@ module.exports = setupPhrase2Post = () => {
 
 		app.music = askForMusic(); // optional
 		if(!app.music) app.music = await getRandomMusic(app.artist);
+
+		app.lyrics = getLyrics();
 	}
 
 	getRandomLetter = () => {
@@ -25,9 +28,6 @@ module.exports = setupPhrase2Post = () => {
 
 	getRandomArrayItem = (myArray = []) => {
 		arrayIndex = Math.floor(Math.random() * (myArray.length-1));
-		console.log("myArray", myArray);
-		console.log("myArray length", myArray.length);
-		console.log("arrayIndex", arrayIndex);
 		return myArray[arrayIndex]
 	}
 
@@ -43,15 +43,19 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	askForMusic = () => {
-		return music = readlineSync.question(`What of ${app.artist} you want?`);
+		return music = readlineSync.question(`What music of ${app.artist} you want?`);
 	}
 
 	getRandomMusic = async () => {
 		answer = await vagalume.discography(app.artist, []);
-		all_lyrics = answer.artist.lyrics.item;
-		lyric = getRandomArrayItem(all_lyrics);
-		lyric_name = lyric.desc;
-		return lyric_name;
+		all_musics = answer.artist.lyrics.item;
+		music = getRandomArrayItem(all_musics);
+		music_name = music.desc;
+		return music_name;
+	}
+
+	getLyrics = async () => {
+
 	}
 
 	return app;
