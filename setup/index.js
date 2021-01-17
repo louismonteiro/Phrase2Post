@@ -11,13 +11,13 @@ module.exports = setupPhrase2Post = () => {
 	app.lyrics = null;
 
 	app.startQuestionnaire = async () => {
-		app.artist = askForArtist(); // optional
+		app.artist = await askForArtist(); // optional
 		if(!app.artist) app.artist = await getRandomArtist();
 
-		app.music = askForMusic(); // optional
+		if(!!app.artist) app.music = await askForMusic(); // optional
 		if(!app.music) app.music = await getRandomMusic(app.artist);
 
-		app.lyrics = getLyrics();
+		if(!!app.music) app.lyrics = await getLyrics();
 	}
 
 	getRandomLetter = () => {
@@ -35,15 +35,10 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	getRandomArtist = async () => {
-		try{
-			answer = await vagalume.search('art', getRandomLetter());
-			all_artists = answer.response.docs;
-			artist = getRandomArrayItem(all_artists);
-			return artist.band;
-		} catch(e){
-			console.log('Sorry, something went wrong when we were looking for music of ', app.artist);
-		}
-		
+		answer = await vagalume.search('art', getRandomLetter());
+		all_artists = answer.response.docs;
+		artist = getRandomArrayItem(all_artists);
+		return artist.band;
 	}
 
 	askForMusic = () => {
@@ -51,11 +46,15 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	getRandomMusic = async () => {
-		answer = await vagalume.discography(app.artist, []);
-		all_musics = answer.artist.lyrics.item;
-		music = getRandomArrayItem(all_musics);
-		music_name = music.desc;
-		return music_name;
+		try{
+			answer = await vagalume.discography(app.artist, []);
+			all_musics = answer.artist.lyrics.item;
+			music = getRandomArrayItem(all_musics);
+			music_name = music.desc;
+			return music_name;
+		} catch(e){	
+			console.log('Sorry, something went wrong when we were looking for music of ', app.artist);
+		}
 	}
 
 	getLyrics = async () => {
@@ -65,4 +64,5 @@ module.exports = setupPhrase2Post = () => {
 	}
 
 	return app;
+
 };
