@@ -1,7 +1,7 @@
 module.exports = lyricsToArray = (lyrics) => {
 	
 	try{
-		all_lines = lyrics.split('\n');
+		all_lines = lyrics.split('\n').filter(line => line.trim() !== '');
 		grouped_lines = [];
 		
 		for( let i = 0; i < Math.ceil(all_lines.length/4); i++ ){
